@@ -33,7 +33,7 @@
         public int ExpireMinutes { get; set; } = 60;       
         /// SecretKey'in yapılandırılıp yapılandırılmadığını kontrol eder.
         /// Uygulama başlarken veya token üretmeden önce çağrılabilir.
-        /// </summary>
+        
         public bool GecerliMi()
         {
             return !string.IsNullOrWhiteSpace(SecretKey)
