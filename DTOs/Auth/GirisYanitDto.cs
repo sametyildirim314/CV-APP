@@ -1,9 +1,8 @@
 ﻿namespace UniCareer.SimpleAPI.DTOs.Auth
 {
-    /// <summary>
+   
     /// Başarılı giriş yanıtı. Frontend Token'ı localStorage'a kaydeder.
     /// Hassas alanlar (PasswordHash vb.) burada yer almaz.
-    /// </summary>
     public class GirisYanitDto
     {
         public Guid Id { get; set; }

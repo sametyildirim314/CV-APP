@@ -30,6 +30,6 @@
         // Veritabanında virgülle ayrılmış string olarak saklanır (CvContext'te HasConversion)
         public List<string> Yetenekler { get; set; } = new();
 
-        public DateTime OlusturulmaTarihi { get; set; } = DateTime.Now;
+        public DateTime OlusturulmaTarihi { get; set; } = DateTime.UtcNow;
     }
 }

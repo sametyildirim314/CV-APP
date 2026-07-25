@@ -28,7 +28,7 @@ namespace UniCareer.SimpleAPI.Models
         public string Rol { get; set; } = "User";
 
         // Hesabın oluşturulma tarihi.
-        public DateTime KayitTarihi { get; set; } = DateTime.Now;
+        public DateTime KayitTarihi { get; set; } = DateTime.UtcNow;
 
         // Navigation: One-to-Many → bir kullanıcının birden fazla CV'si olabilir.
         [JsonIgnore] // JSON serileştirmede sonsuz döngüyü önler

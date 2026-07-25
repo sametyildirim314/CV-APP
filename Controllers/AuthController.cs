@@ -4,11 +4,7 @@ using UniCareer.SimpleAPI.Services;
 
 namespace UniCareer.SimpleAPI.Controllers
 {
-    /// <summary>
-    /// Kimlik doğrulama API uç noktaları (kayıt ve giriş).
-    /// Bu controller ince tutulur; iş mantığı AuthService'tedir.
-    /// Base route: /api/Auth
-    /// </summary>
+   
     [Route("api/[controller]")]
     [ApiController]
     public class AuthController : ControllerBase
@@ -20,13 +16,7 @@ namespace UniCareer.SimpleAPI.Controllers
         {
             _authService = authService;
         }
-
-        /// <summary>
-        /// Yeni kullanıcı kaydı.
-        /// POST /api/Auth/kayit
-        /// Body: { "ad", "soyad", "email", "sifre" }
-        /// Başarılı yanıt: GirisYanitDto (token dahil — kayıt sonrası otomatik giriş)
-        /// </summary>
+          
         [HttpPost("kayit")]
         public async Task<IActionResult> Kayit([FromBody] KayitDto istek)
         {
@@ -49,13 +39,7 @@ namespace UniCareer.SimpleAPI.Controllers
                 return StatusCode(500, new { mesaj = "Kayıt sırasında beklenmedik bir hata oluştu.", detay = ex.Message });
             }
         }
-
-        /// <summary>
-        /// Kullanıcı girişi.
-        /// POST /api/Auth/giris
-        /// Body: { "email", "sifre" }
-        /// Başarılı yanıt: GirisYanitDto (token frontend'de localStorage'a kaydedilir)
-        /// </summary>
+        
         [HttpPost("giris")]
         public async Task<IActionResult> Giris([FromBody] GirisDto istek)
         {
