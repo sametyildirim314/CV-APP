@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
+import { useAuth } from "../AuthContext";
 
 const API = process.env.REACT_APP_API_URL;
 
 function LoginPage() {
     const navigate = useNavigate();
+    const { login } = useAuth();
     const [form, setForm] = useState({ email: "", sifre: "" });
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
@@ -42,18 +44,7 @@ function LoginPage() {
                 return;
             }
 
-            localStorage.setItem("token", data.token);
-            localStorage.setItem(
-                "user",
-                JSON.stringify({
-                    id: data.id,
-                    ad: data.ad,
-                    soyad: data.soyad,
-                    email: data.email,
-                    rol: data.rol,
-                })
-            );
-
+            login(data);
             navigate("/");
         } catch {
             setError("Sunucuya bağlanılamadı. API çalışıyor mu?");
