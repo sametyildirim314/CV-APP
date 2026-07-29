@@ -4,6 +4,7 @@ import './App.css';
 import CvListPage from "./pages/CvListPage";
 import CreateCvPage from "./pages/CreateCvPage";
 import RegisterPage from "./pages/RegisterPage";
+import LoginPage from "./pages/LoginPage";
 
 function App() {
     return (
@@ -50,13 +51,14 @@ function App() {
                             to="/kayit"
                             className={({ isActive }) => `nav-link ${isActive ? "active" : ""}`}
                         >
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                <path d="M16 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2" />
-                                <circle cx="9" cy="7" r="4" />
-                                <line x1="19" y1="8" x2="19" y2="14" />
-                                <line x1="22" y1="11" x2="16" y2="11" />
-                            </svg>
+                           
                             <span>Kayıt Ol</span>
+                        </NavLink>
+                        <NavLink
+                            to="/giris"
+                            className={({ isActive }) => `nav-link ${isActive ? "active" : ""}`}
+                        >
+                            <span>Giriş Yap</span>
                         </NavLink>
                     </div>
                 </nav>
@@ -66,6 +68,7 @@ function App() {
                         <Route path="/" element={<CvListPage />} />
                         <Route path="/create" element={<CreateCvPage />} />
                         <Route path="/kayit" element={<RegisterPage />} />
+                        <Route path="/giris" element={<LoginPage />} />
                     </Routes>
                 </main>
             </div>
