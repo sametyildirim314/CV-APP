@@ -1,9 +1,6 @@
 ﻿namespace UniCareer.SimpleAPI.DTOs.Auth
 {
-    /// <summary>
-    /// Kayıt (Register) isteği → POST /api/Auth/kayit
-    /// Sifre düz metin gelir; AuthService BCrypt ile hash'leyip Kullanici.PasswordHash'e yazar.
-    /// </summary>
+    
     public class KayitDto
     {
         public string Ad { get; set; } = string.Empty;

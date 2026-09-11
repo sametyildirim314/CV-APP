@@ -99,6 +99,7 @@ namespace UniCareer.SimpleAPI.Controllers
         {
             try
             {
+<<<<<<< HEAD
                 var kullaniciId = MevcutKullaniciId();
                 if (kullaniciId == null)
                     return Unauthorized(new { mesaj = "Geçersiz token." });
@@ -108,6 +109,16 @@ namespace UniCareer.SimpleAPI.Controllers
                     .FirstOrDefaultAsync(c => c.Id == id);
 
                 if (mevcutCv == null)
+=======
+                // 1. ADIM: Mevcut kaydı al (sadece Id + KullaniciId; AsNoTracking)
+                var mevcutCv = await _context.Cvler
+                    .AsNoTracking()
+                    .Where(c => c.Id == id)
+                    .Select(c => new { c.Id, c.KullaniciId })
+                    .FirstOrDefaultAsync();
+
+                if (mevcutCv is null)
+>>>>>>> 5aade8df828b19f9d91da607de1eab4a7eead124
                     return NotFound(new { mesaj = "Güncellenecek CV bulunamadı." });
 
                 // Başka kullanıcının CV'sini güncelleme girişimi → 403 Forbidden
@@ -116,8 +127,13 @@ namespace UniCareer.SimpleAPI.Controllers
 
                 var guncellenmisEntity = new CvEntity
                 {
+<<<<<<< HEAD
                     Id = id,
                     KullaniciId = mevcutCv.KullaniciId, // Token'daki kullanıcı; URL'den değil
+=======
+                    Id = id, // Mevcut ID'yi veriyoruz ki SQL kimi güncelleyeceğini bilsin
+                    KullaniciId = mevcutCv.KullaniciId, // Sahibi koru (ileride token'dan alınabilir)
+>>>>>>> 5aade8df828b19f9d91da607de1eab4a7eead124
                     AdSoyad = guncelVeri.AdSoyad,
                     Unvan = guncelVeri.Unvan,
                     Email = guncelVeri.Email,
@@ -152,7 +168,7 @@ namespace UniCareer.SimpleAPI.Controllers
         /// Başka birinin Id'si gönderilirse → 403 Forbidden.
         /// </summary>
         [HttpPost("kullanici/{kullaniciId}/olustur-ve-indir")]
-        public async Task<IActionResult> CvOlusturVeIndir(int kullaniciId, [FromBody] CvIstekDto istek)
+        public async Task<IActionResult> CvOlusturVeIndir(Guid kullaniciId, [FromBody] CvIstekDto istek)
         {
             try
             {

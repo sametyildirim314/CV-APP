@@ -9,7 +9,7 @@
         public int Id { get; set; }
 
         // Foreign Key → Kullanicilar.Id
-        public int KullaniciId { get; set; }
+        public Guid KullaniciId { get; set; }
 
         // Navigation Property → ilişkili kullanıcı nesnesi
         public Kullanici? Kullanici { get; set; }
@@ -30,6 +30,6 @@
         // Veritabanında virgülle ayrılmış string olarak saklanır (CvContext'te HasConversion)
         public List<string> Yetenekler { get; set; } = new();
 
-        public DateTime OlusturulmaTarihi { get; set; } = DateTime.Now;
+        public DateTime OlusturulmaTarihi { get; set; } = DateTime.UtcNow;
     }
 }

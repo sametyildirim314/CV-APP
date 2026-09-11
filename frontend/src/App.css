@@ -70,6 +70,26 @@
   flex-shrink: 0;
 }
 
+.nav-user-area {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.nav-user {
+  color: var(--color-text-nav-active);
+  font-size: 0.9rem;
+  font-weight: 600;
+  padding: 8px 12px;
+}
+
+.nav-logout {
+  background: none;
+  border: none;
+  font-family: inherit;
+  cursor: pointer;
+}
+
 /* ========== MAIN LAYOUT ========== */
 .main-content {
   flex: 1;
@@ -786,4 +806,51 @@
     min-width: 120px;
     padding: 12px 14px;
   }
+}
+
+/* ========== AUTH (KAYIT / GİRİŞ) ========== */
+.auth-page {
+  display: flex;
+  justify-content: center;
+  padding: 24px 0 48px;
+  animation: fadeIn 0.4s ease;
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 440px;
+}
+
+.auth-card:hover {
+  box-shadow: var(--shadow-sm);
+  transform: none;
+}
+
+.auth-header {
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+.auth-header h1 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin-bottom: 4px;
+}
+
+.auth-header p {
+  color: var(--color-text-secondary);
+  font-size: 0.95rem;
+}
+
+.auth-submit {
+  width: 100%;
+  margin-top: 8px;
+}
+
+.auth-footer {
+  margin-top: 20px;
+  text-align: center;
+  font-size: 0.875rem;
+  color: var(--color-text-secondary);
 }

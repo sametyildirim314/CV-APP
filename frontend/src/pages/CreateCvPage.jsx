@@ -1,4 +1,6 @@
 import React, { useState, useEffect, useCallback } from "react";
+import { Link } from "react-router-dom";
+import { useAuth } from "../AuthContext";
 
 const API = process.env.REACT_APP_API_URL;
 
@@ -8,16 +10,15 @@ const EMPTY_PROJE = { projeAdi: "", aciklama: "" };
 const EMPTY_SERTIFIKA = { sertifikaAdi: "", verenKurum: "", alisTarihi: "", bitisTarihi: "", aciklama: "" };
 
 function CreateCvPage() {
-    const [users, setUsers] = useState([]);
-    const [loadingUsers, setLoadingUsers] = useState(true);
-    const [selectedUserId, setSelectedUserId] = useState("");
+    const { user } = useAuth();
     const [creating, setCreating] = useState(false);
     const [toast, setToast] = useState(null);
 
+    // Girişli kullanıcının adı ve e-postası formda hazır gelir
     const [form, setForm] = useState({
-        adSoyad: "",
+        adSoyad: user ? `${user.ad} ${user.soyad}` : "",
         unvan: "",
-        email: "",
+        email: user ? user.email : "",
         telefon: "",
         adres: "",
         özet: "",
@@ -30,32 +31,11 @@ function CreateCvPage() {
     const [sertifikalar, setSertifikalar] = useState([]);
 
     useEffect(() => {
-        fetchUsers();
-    }, []);
-
-    useEffect(() => {
         if (toast) {
             const t = setTimeout(() => setToast(null), 4000);
             return () => clearTimeout(t);
         }
     }, [toast]);
-
-    const fetchUsers = () => {
-        setLoadingUsers(true);
-        fetch(`${API}/api/Cv/kullanicigetir`)
-            .then((res) => {
-                if (!res.ok) throw new Error(`HTTP ${res.status}`);
-                return res.json();
-            })
-            .then((data) => {
-                setUsers(data);
-                setLoadingUsers(false);
-            })
-            .catch((err) => {
-                showToast("error", "Kullanıcılar yüklenirken hata: " + err.message);
-                setLoadingUsers(false);
-            });
-    };
 
     const showToast = (type, message) => setToast({ type, message });
 
@@ -77,7 +57,15 @@ function CreateCvPage() {
     };
 
     const resetForm = () => {
-        setForm({ adSoyad: "", unvan: "", email: "", telefon: "", adres: "", özet: "", yetenekler: "" });
+        setForm({
+            adSoyad: user ? `${user.ad} ${user.soyad}` : "",
+            unvan: "",
+            email: user ? user.email : "",
+            telefon: "",
+            adres: "",
+            özet: "",
+            yetenekler: "",
+        });
         setDeneyimler([]);
         setEgitimler([]);
         setProjeler([]);
@@ -85,8 +73,8 @@ function CreateCvPage() {
     };
 
     const handleSubmit = async (action) => {
-        if (!selectedUserId) {
-            showToast("error", "Lütfen bir kullanıcı seçin");
+        if (!user) {
+            showToast("error", "CV oluşturmak için giriş yapmalısınız");
             return;
         }
         if (!form.adSoyad.trim() || !form.email.trim()) {
@@ -120,7 +108,7 @@ function CreateCvPage() {
             };
 
             const res = await fetch(
-                `${API}/api/Cv/kullanici/${selectedUserId}/olustur-ve-indir`,
+                `${API}/api/Cv/kullanici/${user.id}/olustur-ve-indir`,
                 {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
@@ -177,57 +165,23 @@ function CreateCvPage() {
                 <p>Profesyonel bir CV oluşturun ve PDF olarak indirin</p>
             </div>
 
-            {/* Kullanıcı Seçimi */}
-            <div className="form-section">
-                <div className="form-section-header">
-                    <div className="form-section-icon blue">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                            <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" />
-                            <circle cx="12" cy="7" r="4" />
-                        </svg>
-                    </div>
-                    <div>
-                        <div className="form-section-title">Kullanıcı Seçimi</div>
-                        <div className="form-section-subtitle">CV'nin bağlanacağı kullanıcıyı seçin</div>
-                    </div>
-                </div>
-
-                {loadingUsers ? (
-                    <div style={{ display: "flex", alignItems: "center", gap: 10, color: "var(--color-text-secondary)", fontSize: "0.9rem" }}>
-                        <span className="spinner spinner-dark" /> Kullanıcılar yükleniyor...
-                    </div>
-                ) : users.length === 0 ? (
-                    <div className="alert alert-warning">
+            {/* Giriş yapılmadıysa formu gösterme */}
+            {!user ? (
+                <div className="form-section">
+                    <div className="alert alert-warning" style={{ marginBottom: 0 }}>
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                             <path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z" />
                             <line x1="12" y1="9" x2="12" y2="13" />
                             <line x1="12" y1="17" x2="12.01" y2="17" />
                         </svg>
-                        Sistemde kayıtlı kullanıcı bulunamadı. Lütfen önce bir kullanıcı oluşturun.
+                        <span>
+                            CV oluşturmak için önce giriş yapmalısınız.{" "}
+                            <Link to="/giris">Giriş yap</Link> veya{" "}
+                            <Link to="/kayit">kayıt ol</Link>.
+                        </span>
                     </div>
-                ) : (
-                    <div className="form-group" style={{ marginBottom: 0 }}>
-                        <label className="form-label">
-                            Kullanıcı <span className="required">*</span>
-                        </label>
-                        <select
-                            className="form-select"
-                            value={selectedUserId}
-                            onChange={(e) => setSelectedUserId(e.target.value)}
-                        >
-                            <option value="">Kullanıcı seçiniz...</option>
-                            {users.map((u) => (
-                                <option key={u.id} value={u.id}>
-                                    {u.ad} {u.soyad} ({u.email})
-                                </option>
-                            ))}
-                        </select>
-                    </div>
-                )}
-            </div>
-
-            {/* Kişisel Bilgiler */}
-            {selectedUserId && (
+                </div>
+            ) : (
                 <>
                     <div className="form-section">
                         <div className="form-section-header">

@@ -23,9 +23,9 @@ namespace UniCareer.SimpleAPI.Data
             // 1. Liste Karşılaştırıcı (ValueComparer) Tanımlama
             // Bu kısım EF Core'a listenin içeriğinin değişip değişmediğini kontrol etmeyi öğretir.
             var yetenekComparer = new ValueComparer<List<string>>(
-                (c1, c2) => c1.SequenceEqual(c2), // İki liste aynı içeriğe mi sahip?
-                c => c.Aggregate(0, (a, v) => HashCode.Combine(a, v.GetHashCode())), // Değişiklik kontrolü için benzersiz kod üret
-                c => c.ToList() // Listenin kopyasını oluştur (Deep Copy)
+                (c1, c2) => (c1 == null && c2 == null) || (c1 != null && c2 != null && c1.SequenceEqual(c2)),
+                c => c == null ? 0 : c.Aggregate(0, (a, v) => HashCode.Combine(a, v.GetHashCode())),
+                c => c == null ? new List<string>() : c.ToList()
             );
 
             // 2. Dönüştürücü ve Karşılaştırıcıyı Uygulama

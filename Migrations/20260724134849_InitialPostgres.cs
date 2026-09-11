@@ -1,12 +1,13 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
+using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
 namespace CVGenius_AI.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCvDatabaseSchema : Migration
+    public partial class InitialPostgres : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -15,11 +16,13 @@ namespace CVGenius_AI.Migrations
                 name: "Kullanicilar",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Ad = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Soyad = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Ad = table.Column<string>(type: "text", nullable: false),
+                    Soyad = table.Column<string>(type: "text", nullable: false),
+                    Email = table.Column<string>(type: "text", nullable: false),
+                    PasswordHash = table.Column<string>(type: "text", nullable: false),
+                    Rol = table.Column<string>(type: "text", nullable: false),
+                    KayitTarihi = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -30,17 +33,17 @@ namespace CVGenius_AI.Migrations
                 name: "Cvler",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    KullaniciId = table.Column<int>(type: "int", nullable: false),
-                    AdSoyad = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Unvan = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Telefon = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Adres = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Özet = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Yetenekler = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    OlusturulmaTarihi = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    KullaniciId = table.Column<Guid>(type: "uuid", nullable: false),
+                    AdSoyad = table.Column<string>(type: "text", nullable: false),
+                    Unvan = table.Column<string>(type: "text", nullable: false),
+                    Email = table.Column<string>(type: "text", nullable: false),
+                    Telefon = table.Column<string>(type: "text", nullable: false),
+                    Adres = table.Column<string>(type: "text", nullable: false),
+                    Özet = table.Column<string>(type: "text", nullable: false),
+                    Yetenekler = table.Column<string>(type: "text", nullable: false),
+                    OlusturulmaTarihi = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -57,14 +60,14 @@ namespace CVGenius_AI.Migrations
                 name: "Deneyimler",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Pozisyon = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Sirket = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    BaslangicTarihi = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    BitisTarihi = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Aciklama = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CvEntityId = table.Column<int>(type: "int", nullable: true)
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Pozisyon = table.Column<string>(type: "text", nullable: false),
+                    Sirket = table.Column<string>(type: "text", nullable: false),
+                    BaslangicTarihi = table.Column<string>(type: "text", nullable: false),
+                    BitisTarihi = table.Column<string>(type: "text", nullable: false),
+                    Aciklama = table.Column<string>(type: "text", nullable: false),
+                    CvEntityId = table.Column<int>(type: "integer", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -80,14 +83,14 @@ namespace CVGenius_AI.Migrations
                 name: "Eğitimler",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    OkulAdi = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Bolum = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    BaşlangıcTarihi = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    BitisTarihi = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Ortlama = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CvEntityId = table.Column<int>(type: "int", nullable: true)
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    OkulAdi = table.Column<string>(type: "text", nullable: false),
+                    Bolum = table.Column<string>(type: "text", nullable: false),
+                    BaşlangıcTarihi = table.Column<string>(type: "text", nullable: false),
+                    BitisTarihi = table.Column<string>(type: "text", nullable: false),
+                    Ortlama = table.Column<string>(type: "text", nullable: false),
+                    CvEntityId = table.Column<int>(type: "integer", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -103,11 +106,11 @@ namespace CVGenius_AI.Migrations
                 name: "Projeler",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    ProjeAdi = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Aciklama = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CvEntityId = table.Column<int>(type: "int", nullable: true)
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    ProjeAdi = table.Column<string>(type: "text", nullable: false),
+                    Aciklama = table.Column<string>(type: "text", nullable: false),
+                    CvEntityId = table.Column<int>(type: "integer", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -123,14 +126,14 @@ namespace CVGenius_AI.Migrations
                 name: "Sertifikalar",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    SertifikaAdi = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    VerenKurum = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    AlisTarihi = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    BitisTarihi = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Aciklama = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CvEntityId = table.Column<int>(type: "int", nullable: true)
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    SertifikaAdi = table.Column<string>(type: "text", nullable: false),
+                    VerenKurum = table.Column<string>(type: "text", nullable: false),
+                    AlisTarihi = table.Column<string>(type: "text", nullable: false),
+                    BitisTarihi = table.Column<string>(type: "text", nullable: false),
+                    Aciklama = table.Column<string>(type: "text", nullable: false),
+                    CvEntityId = table.Column<int>(type: "integer", nullable: true)
                 },
                 constraints: table =>
                 {
