@@ -36,12 +36,12 @@ namespace UniCareer.SimpleAPI.Controllers
         /// <summary>
         /// Token'daki kullanıcı Id'sini okur. Geçersizse null döner.
         /// </summary>
-        private int? MevcutKullaniciId()
+        private Guid? MevcutKullaniciId()
         {
             var idStr = User.FindFirstValue(JwtRegisteredClaimNames.Sub)
                 ?? User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            return int.TryParse(idStr, out var id) ? id : null;
+            return Guid.TryParse(idStr, out var id) ? id : null;
         }
 
         /// <summary>
@@ -99,18 +99,10 @@ namespace UniCareer.SimpleAPI.Controllers
         {
             try
             {
-<<<<<<< HEAD
                 var kullaniciId = MevcutKullaniciId();
                 if (kullaniciId == null)
                     return Unauthorized(new { mesaj = "Geçersiz token." });
 
-                var mevcutCv = await _context.Cvler
-                    .AsNoTracking()
-                    .FirstOrDefaultAsync(c => c.Id == id);
-
-                if (mevcutCv == null)
-
-                // 1. ADIM: Mevcut kaydı al (sadece Id + KullaniciId; AsNoTracking)
                 var mevcutCv = await _context.Cvler
                     .AsNoTracking()
                     .Where(c => c.Id == id)
@@ -118,7 +110,6 @@ namespace UniCareer.SimpleAPI.Controllers
                     .FirstOrDefaultAsync();
 
                 if (mevcutCv is null)
-
                     return NotFound(new { mesaj = "Güncellenecek CV bulunamadı." });
 
                 // Başka kullanıcının CV'sini güncelleme girişimi → 403 Forbidden
@@ -127,12 +118,8 @@ namespace UniCareer.SimpleAPI.Controllers
 
                 var guncellenmisEntity = new CvEntity
                 {
-
                     Id = id,
-                    KullaniciId = mevcutCv.KullaniciId, // Token'daki kullanıcı; URL'den değil
-
-                    Id = id, // Mevcut ID'yi veriyoruz ki SQL kimi güncelleyeceğini bilsin
-                    KullaniciId = mevcutCv.KullaniciId, // Sahibi koru (ileride token'dan alınabilir)
+                    KullaniciId = mevcutCv.KullaniciId, // Sahibi koru; URL'den veya token gövdesinden değiştirilmesin
 
                     AdSoyad = guncelVeri.AdSoyad,
                     Unvan = guncelVeri.Unvan,
