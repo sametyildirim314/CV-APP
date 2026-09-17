@@ -1,4 +1,4 @@
-# CVGenius-AI
+# CV-APP
 
 ## Overview
 CVGenius-AI is a C# ASP.NET Core project designed to leverage the power of Artificial Intelligence for CV/resume processing and generation. This project provides a comprehensive solution for users to create and manage their CVs and resumes
