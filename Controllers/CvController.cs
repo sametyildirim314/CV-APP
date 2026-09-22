@@ -36,12 +36,12 @@ namespace UniCareer.SimpleAPI.Controllers
         /// <summary>
         /// Token'daki kullanıcı Id'sini okur. Geçersizse null döner.
         /// </summary>
-        private Guid? MevcutKullaniciId()
+        private int? MevcutKullaniciId()
         {
             var idStr = User.FindFirstValue(JwtRegisteredClaimNames.Sub)
                 ?? User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            return Guid.TryParse(idStr, out var id) ? id : null;
+            return int.TryParse(idStr, out var id) ? id : null;
         }
 
         /// <summary>
@@ -155,7 +155,7 @@ namespace UniCareer.SimpleAPI.Controllers
         /// Başka birinin Id'si gönderilirse → 403 Forbidden.
         /// </summary>
         [HttpPost("kullanici/{kullaniciId}/olustur-ve-indir")]
-        public async Task<IActionResult> CvOlusturVeIndir(Guid kullaniciId, [FromBody] CvIstekDto istek)
+        public async Task<IActionResult> CvOlusturVeIndir(int kullaniciId, [FromBody] CvIstekDto istek)
         {
             try
             {

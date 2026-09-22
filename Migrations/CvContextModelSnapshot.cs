@@ -42,8 +42,8 @@ namespace CVGenius_AI.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("KullaniciId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<int>("KullaniciId")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("OlusturulmaTarihi")
                         .HasColumnType("datetime2");
@@ -149,9 +149,11 @@ namespace CVGenius_AI.Migrations
 
             modelBuilder.Entity("UniCareer.SimpleAPI.Models.Kullanici", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Ad")
                         .IsRequired()

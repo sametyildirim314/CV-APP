@@ -9,7 +9,7 @@
         public int Id { get; set; }
 
         // Foreign Key → Kullanicilar.Id
-        public Guid KullaniciId { get; set; }
+        public int KullaniciId { get; set; }
 
         // Navigation Property → ilişkili kullanıcı nesnesi
         public Kullanici? Kullanici { get; set; }

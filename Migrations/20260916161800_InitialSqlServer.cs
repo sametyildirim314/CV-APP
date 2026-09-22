@@ -15,7 +15,8 @@ namespace CVGenius_AI.Migrations
                 name: "Kullanicilar",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     Ad = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Soyad = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -34,7 +35,7 @@ namespace CVGenius_AI.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    KullaniciId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    KullaniciId = table.Column<int>(type: "int", nullable: false),
                     AdSoyad = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Unvan = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
