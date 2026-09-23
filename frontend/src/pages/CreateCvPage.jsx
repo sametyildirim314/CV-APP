@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+﻿import React, { useState, useEffect, useCallback } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../AuthContext";
 
@@ -111,7 +111,10 @@ function CreateCvPage() {
                 `${API}/api/Cv/kullanici/${user.id}/olustur-ve-indir`,
                 {
                     method: "POST",
-                    headers: { "Content-Type": "application/json" },
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Authorization": `Bearer ${localStorage.getItem("token")}`,
+                    },
                     body: JSON.stringify(body),
                 }
             );
