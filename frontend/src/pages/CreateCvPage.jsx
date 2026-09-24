@@ -1,5 +1,4 @@
 ﻿import React, { useState, useEffect, useCallback } from "react";
-import { Link } from "react-router-dom";
 import { useAuth } from "../AuthContext";
 
 const API = process.env.REACT_APP_API_URL;
@@ -168,24 +167,9 @@ function CreateCvPage() {
                 <p>Profesyonel bir CV oluşturun ve PDF olarak indirin</p>
             </div>
 
-            {/* Giriş yapılmadıysa formu gösterme */}
-            {!user ? (
-                <div className="form-section">
-                    <div className="alert alert-warning" style={{ marginBottom: 0 }}>
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                            <path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z" />
-                            <line x1="12" y1="9" x2="12" y2="13" />
-                            <line x1="12" y1="17" x2="12.01" y2="17" />
-                        </svg>
-                        <span>
-                            CV oluşturmak için önce giriş yapmalısınız.{" "}
-                            <Link to="/giris">Giriş yap</Link> veya{" "}
-                            <Link to="/kayit">kayıt ol</Link>.
-                        </span>
-                    </div>
-                </div>
-            ) : (
-                <>
+            {/* Giriş kontrolü artık App.jsx'teki KorumaliSayfa'da yapılıyor,
+                buraya sadece giriş yapmış kullanıcı ulaşabilir */}
+            <>
                     <div className="form-section">
                         <div className="form-section-header">
                             <div className="form-section-icon blue">
@@ -483,8 +467,7 @@ function CreateCvPage() {
                             </button>
                         </div>
                     </div>
-                </>
-            )}
+            </>
         </div>
     );
 }

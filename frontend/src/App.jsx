@@ -76,6 +76,23 @@ function Navbar() {
     );
 }
 
+
+function AnaSayfaYonlendir() {
+    const { user } = useAuth();
+    return <Navigate to={user ? "/create" : "/giris"} replace />;
+}
+
+
+function KorumaliSayfa({ children }) {
+    const { user } = useAuth();
+
+    if (!user) {
+        return <Navigate to="/giris" replace />;
+    }
+
+    return children;
+}
+
 function App() {
     return (
         <AuthProvider>
@@ -84,8 +101,18 @@ function App() {
                     <Navbar />
                     <main className="main-content">
                         <Routes>
-                            <Route path="/" element={<Navigate to="/create" replace />} />
-                            <Route path="/create" element={<CreateCvPage />} />
+                            <Route path="/" element={<AnaSayfaYonlendir />} />
+
+                            {/* /create artık korumalı: giriş yoksa buraya gelinemez */}
+                            <Route
+                                path="/create"
+                                element={
+                                    <KorumaliSayfa>
+                                        <CreateCvPage />
+                                    </KorumaliSayfa>
+                                }
+                            />
+
                             <Route path="/kayit" element={<RegisterPage />} />
                             <Route path="/giris" element={<LoginPage />} />
                         </Routes>

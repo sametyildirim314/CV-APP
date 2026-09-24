@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+﻿import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../AuthContext";
 
@@ -71,7 +71,7 @@ function RegisterPage() {
                 <div className="card-body">
                     <div className="auth-header">
                         <h1>Kayıt Ol</h1>
-                        <p>CVGenius AI hesabı oluştur</p>
+                        <p>CVPro hesabı oluştur</p>
                     </div>
 
                     {error && (
