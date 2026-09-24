@@ -1,4 +1,4 @@
-/* ========== NAVBAR ========== */
+﻿/* ========== NAVBAR ========== */
 .navbar {
   background: var(--color-bg-nav);
   padding: 0 24px;
@@ -853,4 +853,195 @@
   text-align: center;
   font-size: 0.875rem;
   color: var(--color-text-secondary);
+}
+
+.auth-footer a {
+  font-weight: 600;
+}
+
+/* ========== AUTH - İKİ SÜTUNLU DÜZEN ========== */
+/* Kartı flex ile ikiye bölüyoruz. Sol taraf tanıtım, sağ taraf form.
+   overflow:hidden -> köşeleri yuvarlatınca içerideki gradient dışarı taşmasın */
+.auth-split {
+  display: flex;
+  width: 100%;
+  max-width: 900px;
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-lg);
+  overflow: hidden;
+}
+
+/* Sol panel: koyu gradient arka plan */
+.auth-side {
+  flex: 1;
+  padding: 48px 40px;
+  color: white;
+  background: linear-gradient(135deg, #1e1b4b 0%, #4f46e5 100%);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.auth-side-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 700;
+  font-size: 1.1rem;
+  margin-bottom: 32px;
+  opacity: 0.9;
+}
+
+.auth-side-logo svg {
+  width: 26px;
+  height: 26px;
+}
+
+.auth-side h2 {
+  font-size: 1.75rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin-bottom: 12px;
+}
+
+.auth-side p {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  opacity: 0.85;
+  margin-bottom: 28px;
+}
+
+/* Özellik listesi. list-style:none ile noktaları kaldırıp
+   kendi ✓ işaretimizi koyuyoruz */
+.auth-side-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  font-size: 0.9rem;
+}
+
+.auth-side-list li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Yuvarlak tik işareti */
+.auth-check {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  font-size: 0.75rem;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+/* Sağ panel: form */
+.auth-form-side {
+  flex: 1;
+  padding: 48px 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* Sağ panelde başlığı sola yaslıyoruz, ortalı daha az oturuyor */
+.auth-form-side .auth-header {
+  text-align: left;
+}
+
+/* ========== INPUT İÇİNDE İKON ========== */
+/* position:relative olan bir kutu -> içindeki absolute ikon buna göre konumlanır */
+.input-icon-wrap {
+  position: relative;
+}
+
+.input-icon {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%); /* dikeyde tam ortala */
+  width: 18px;
+  height: 18px;
+  color: var(--color-text-muted);
+  pointer-events: none; /* ikona tıklanınca input'a tıklanmış gibi olsun */
+}
+
+/* İkon varsa input'un sol boşluğunu artır, yazı ikonun üstüne binmesin */
+.form-input.has-icon {
+  padding-left: 42px;
+}
+
+/* Sağda göz butonu varsa sağ boşluğu da artır */
+.form-input.has-toggle {
+  padding-right: 42px;
+}
+
+/* Input focus olduğunda ikon da renklensin, güzel duruyor */
+.input-icon-wrap:focus-within .input-icon {
+  color: var(--color-primary);
+}
+
+/* Şifre göster/gizle butonu */
+.input-toggle {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-sm);
+  color: var(--color-text-muted);
+  cursor: pointer;
+  transition: all var(--transition);
+}
+
+.input-toggle:hover {
+  color: var(--color-primary);
+  background: var(--color-primary-light);
+}
+
+.input-toggle svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* ========== SPINNER ========== */
+/* Dönen küçük halka. border ile daire çizip bir kenarını şeffaf yapıyoruz,
+   sonra döndürünce "yükleniyor" efekti oluyor. spin animasyonu index.css'te tanımlı. */
+.spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  border-top-color: white;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+
+/* ========== MOBİL ========== */
+/* Dar ekranda sol paneli gizle, sadece form kalsın */
+@media (max-width: 720px) {
+  .auth-side {
+    display: none;
+  }
+
+  .auth-split {
+    max-width: 440px;
+  }
+
+  .auth-form-side {
+    padding: 32px 24px;
+  }
 }
