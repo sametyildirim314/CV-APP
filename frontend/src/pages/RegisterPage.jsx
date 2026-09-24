@@ -57,7 +57,9 @@ function RegisterPage() {
             }
 
             login(data);
-            navigate("/");
+
+            // Kayıt sayfasına geri dönmek anlamsız, geçmişten sil
+            navigate("/", { replace: true });
         } catch (err) {
             setError("Sunucuya bağlanılamadı. API çalışıyor mu?");
         } finally {

@@ -72,7 +72,10 @@ function LoginPage() {
             // Backend'den gelen { id, ad, soyad, email, rol, token } bilgisini
             // AuthContext'e veriyoruz. O da localStorage'a yazıyor.
             login(data);
-            navigate("/");
+
+            // replace: true -> login sayfası geçmişten silinir,
+            // kullanıcı geri tuşuna basınca tekrar login formuna düşmez
+            navigate("/", { replace: true });
         } catch {
             // fetch'in kendisi patlarsa (API kapalı, internet yok vs.) buraya düşer
             setError("Sunucuya bağlanılamadı. API çalışıyor mu?");

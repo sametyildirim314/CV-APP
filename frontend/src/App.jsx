@@ -12,7 +12,8 @@ function Navbar() {
 
     const handleLogout = () => {
         logout();
-        navigate("/giris");
+        // Çıkış sonrası geri tuşuyla korumalı sayfaya dönülmesin
+        navigate("/giris", { replace: true });
     };
 
     return (
